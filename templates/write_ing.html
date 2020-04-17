@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Webpage Title -->
+    <title>WRitersCLUB ; 기사작성</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!--구글폰트-->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Song+Myung&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            /* width: 900px; */
+            margin: 10px 10px 0px 10px;
+
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .logo {
+            display: block;
+            margin: 0px auto;
+        }
+
+        .body {
+            margin-top: 50px;
+            margin-bottom: 10px;
+            font-size: larger;
+        }
+
+        .orders {
+            width: 700px;
+            margin: 0px auto;
+        }
+
+        .buttons-under {
+            float: right;
+        }
+        .writingabout{
+            width: 900px;
+            margin: 10px auto;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
+        <a href="mypage.html"><img src="src/logo.PNG" class="logo" width="500px"></a>
+    </header>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link " href="mypage.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="write.html">작성중인 기사</a>
+                <a class="nav-item nav-link " href="scrap.html">스크랩 기사</a>
+                <a class="nav-item nav-link " href="transcribe.html">필사</a>
+
+                <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
+                <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>
+                <a class="nav-item nav-link disabled" href="#">인기사설</a>
+                <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+            </div>
+        </div>
+    </nav>
+
+    <body>
+        <article>
+            <div class="writingabout">
+                <h3 style="text-align: center; margin-top: 30px;">기사 작성</h3>
+                <div>
+                    <label for="title">제목</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="title">
+                </div>
+
+                <div>
+                    <label for="topic">주제</label>
+                    <input type="text" class="form-control" name="topic" id="topic" placeholder="writing about..">
+                </div>
+
+                <div>
+                    <label for="content">본문</label>
+                    <textarea class="form-control" rows="15 name="content" id="content" placeholder="put the article in here"></textarea>
+                </div>
+
+                <div class="buttons-under" style="margin: 20px 20px;">
+                    <button type="button" class="btn btn-outline-dark" onclick="">저장</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="">목록</button>
+                </div>
+
+            </div>
+        </article>
+
+
+    </body>
+
+
+
+</html>
