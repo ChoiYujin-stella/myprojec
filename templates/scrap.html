@@ -45,7 +45,7 @@
     function listing() {
       $.ajax({
         type: "GET",
-        url: "/memo",
+        url: "/list/article",
         data: {},
         success: function (response) {
           if (response['result'] == 'success') {
@@ -64,7 +64,7 @@
       let temp_html = '<div class="card">\
         <img class="card-img-top" src="'+ image + '" alt="Card image cap">\
         <div class="card-body">\
-          <a href="'+ url + '" class="card-title">' + title + '</a>\
+          <a href="'+ url + '"target="_blank" class="card-title">' + title + '</a>\
           <p class="card-text">'+ desc + '</p>\
           <p class="card-text comment">'+ comment + '</p>\
         </div>\
@@ -79,7 +79,7 @@
 
       $.ajax({
         type: "POST", // POST 방식으로 요청하겠다.
-        url: "/memo", // /memo라는 url에 요청하겠다.
+        url: "/save/article", // /memo라는 url에 요청하겠다.
         data: { url_give: url,
                comment_give: comment }, // 데이터를 주는 방법
         success: function (response) { // 성공하면
@@ -160,11 +160,9 @@
 </head>
 
 <body>
-  
-
   <header>
     <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
-    <a href="mypage.html"><img src="templates/src/logo.PNG" class="logo" width="500px"></a>
+    <a href="mypage"><img src="/static/logo.PNG" class="logo" width="500px"></a>
   </header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -174,10 +172,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link " href="mypage.html">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link " href="write.html">작성중인 기사</a>
-        <a class="nav-item nav-link active" href="scrap.html">스크랩 기사</a>
-        <a class="nav-item nav-link " href="transcribe.html">필사</a>
+        <a class="nav-item nav-link " href="mypage">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link " href="write">작성중인 기사</a>
+        <a class="nav-item nav-link active" href="scrap">스크랩 기사</a>
+        <a class="nav-item nav-link " href="transcribe">필사</a>
 
         <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
         <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>

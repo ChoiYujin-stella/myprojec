@@ -3,77 +3,223 @@
 
 <head>
 
-    <!-- Webpage Title -->
-    <title>WRitersCLUB ; 필사</title>
+  <!-- Webpage Title -->
+  <title>WRitersCLUB ; 필사</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    <!--구글폰트-->
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Song+Myung&display=swap" rel="stylesheet">
+  <!--구글폰트-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Song+Myung&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            /* width: 900px; */
-            margin: 10px 10px 0px 10px;
+  <script>
 
-            font-family: 'Noto Sans KR', sans-serif;
+
+
+    function check() {
+      // form상자에서 입력된 글 읽기
+      let url = $('#transcribe-url').val();
+
+
+      $.ajax({
+        type: "GET", // POST 방식으로 요청하겠다.
+        url: "check_article", // /memo라는 url에 요청하겠다.
+        data: { url_give: url }, // 데이터를 주는 방법
+        success: function (response) { // 성공하면
+          if (response['result'] == 'success') {
+            alert("가져왔습니다");
+
+            let articles = response['articles']
+
+            let desc = articles['desc']
+            let image = articles['image']
+            let title = articles['title']
+            let url = articles['url']
+
+            let temp = '\
+                <div class="card-body">\
+                  <h5 class="card-title">' + title + '</h5>\
+                  <p class="card-text">' + desc + '</p>\
+                </div> \
+              </div>\
+              <button type="button" style="margin: 20px 20px;" class="btn btn-outline-dark" onclick="send()">이 글로 필사 시작하기</button>'
+            $('#article_box').html('');
+            $('#article_box').append(temp);
+          }
+          else {
+            alert('서버 오류!')
+          }
         }
+      })
+    }
 
-        .logo {
-            display: block;
-            margin: 0px auto;
-        }
+    function send() {
+      let url = $('#transcribe-url').val();
+      alert(url)
+      window.open('/transcribe2/' + url)
+    }
 
-        .body {
-            margin-top: 50px;
-            margin-bottom: 10px;
-            font-size: larger;
-        }
-    </style>
+    function empty() {
+      $('#transcribe-url').val('')
+    }
+
+
+
+  </script>
+
+
+  <style>
+    * {
+      /* width: 900px; */
+      margin: 10px 10px 0px 10px;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .logo {
+      display: block;
+      margin: 0px auto;
+    }
+
+    .bbody {
+      margin-top: 50px;
+      margin-bottom: 10px;
+      font-size: larger;
+      width: 100%;
+    }
+
+    .box {
+      width: 800px;
+      display: block;
+      margin: 80px auto;
+    }
+
+    #article_box_whole {
+      width: 800px;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .card-img-top {
+      height: 200px;
+      width: 500px;
+      overflow: hidden;
+    }
+    div.left {
+        width: 49%;
+        float: left;
+        box-sizing: border-box;
+      
+    }
+    div.right {
+        width: 46%;
+        float: right;
+        box-sizing: border-box;
+    
+    }
+    
+  </style>
 
 </head>
 
-<body>
-
-    <header>
-        <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
-        <a href="mypage.html"><img src="src/logo.PNG" class="logo" width="500px"></a>
-    </header>
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link " href="mypage.html">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link " href="write.html">작성중인 기사</a>
-                <a class="nav-item nav-link " href="scrap.html">스크랩 기사</a>
-                <a class="nav-item nav-link active" href="transcribe.html">필사</a>
+<header>
+  <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
+  <a href="mypage"><img src="/static/logo.PNG" class="logo" width="500px"></a>
+</header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link " href="mypage">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link " href="write">작성중인 기사</a>
+      <a class="nav-item nav-link " href="scrap">스크랩 기사</a>
+      <a class="nav-item nav-link active" href="transcribe">필사</a>
 
-                <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
-                <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>
-                <a class="nav-item nav-link disabled" href="#">인기사설</a>
-                <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
-            </div>
-        </div>
-    </nav>
+      <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
+      <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>
+      <a class="nav-item nav-link disabled" href="#">인기사설</a>
+      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+    </div>
+  </div>
+</nav>
+
+<body class="bbody">
+  <div class="right">
+    <div class="box">
+      <h3 style=" text-align: center; margin-top: 30px;">필사 할 글의 url을 넣어주세요</h3>
+      <br>
+      <input type="text" class="form-control" name="title" id="transcribe-url" placeholder="url">
+      <button type="button" style="margin: 10px;" class="btn btn-outline-dark" onclick="check()">확인</button>
+      <button type="button" style="margin: 10px ;" class="btn btn-outline-dark" onclick="empty()">지우기</button>
+    </div>
+
+    <div id="article_box_whole">
+      <div class="card mb-3" id="article_box">
+        <!-- <img src="..." class="card-img-top" alt="..." style="height:100px; width: auto;">
+        <div class="card-body">
+          <h5 class="card-title">제목</h5>
+          <p class="card-text">요약문</p>
+        </div>  -->
+        <!-- </div>
+      <button type="button" style="margin: 20px 20px;" class="btn btn-outline-dark" onclick="send()">이 글로 필사 시작하기</button> -->
+      </div>
+      <br><br><br>
+    </div>
+  </div>
+
+  <div class="left">
+    <table class="table">
+      <thead>
+          <tr>
+              <th></th>
+              <th scope="col">num</th>
+              <th scope="col">제목</th>
+              <th scope="col">추가일</th>
+              <th scope="col">완성도</th>
+          </tr>
+      </thead>
+      <tbody id="orders-box">
+          <tr>
+              <td> <input type="checkbox" name="" value="1"></td>
+              <td>1</td>
+              <td><a href="">초등학교 원격수업의 문제</a></td>
+              <td>2020.04.01</td>
+              <td>0%</td>
+          </tr>
+      </tbody>
+  </table>
+  <div class="buttons-under" >
+      <button type="button" class="btn btn-outline-dark" onclick="location.href='write_ing'">글쓰기</button>
+      <button type="button" class="btn btn-outline-dark" onclick=delete_check() >삭제</button>
+  </div>
+
+      <br><br><br>
+    </div>
+  </div>
+
+  
+
+
+
+
+
 </body>

@@ -26,6 +26,51 @@
     <!--구글폰트-->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Song+Myung&display=swap" rel="stylesheet">
 
+    <script>
+        $(document).ready(function () {
+            $('#orders-box').html('');
+            console.log("이건되냐")
+            listing();
+        });
+
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/list/mine",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+
+                        let mine = response['mine']
+                        for (let i = 0; i < mine.length; i++) {
+                            make_card(mine[i]['title'], mine[i]['topic'], mine[i]['time'])
+                        }
+
+                    }
+                }
+            })
+        }
+
+        function make_card(title, topic, time) {
+            let temp_html = '<tr>\
+                    <td> <input type="checkbox" name="" value="1" ></td> \
+                    <td>1</td>\
+                    <td><a href="write_read">'+ title + '</a></td>\
+                    <td>'+ topic + '</td>\
+                    <td>'+ time + '</td>\
+                    <td> 이건 어째하지..</td>\
+                </tr>'
+
+            $("#orders-box").append(temp_html);
+        }
+        /////////////
+        function delete_check(){
+
+        }
+
+    </script>
+
     <style>
         * {
             /* width: 900px; */
@@ -52,19 +97,17 @@
 
         .buttons-under {
             float: right;
+
         }
     </style>
 
 </head>
 
 <body>
-
     <header>
         <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
-        <a href="mypage.html"><img src="src/logo.PNG" class="logo" width="500px"></a>
+        <a href="mypage"><img src="/static/logo.PNG" class="logo" width="500px"></a>
     </header>
-
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -73,10 +116,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link " href="mypage.html">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link active" href="write.html">작성중인 기사</a>
-                <a class="nav-item nav-link " href="scrap.html">스크랩 기사</a>
-                <a class="nav-item nav-link " href="transcribe.html">필사</a>
+                <a class="nav-item nav-link " href="mypage">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="write">작성중인 기사</a>
+                <a class="nav-item nav-link " href="scrap">스크랩 기사</a>
+                <a class="nav-item nav-link " href="transcribe">필사</a>
 
                 <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
                 <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>
@@ -93,23 +136,25 @@
                     <th></th>
                     <th scope="col">num</th>
                     <th scope="col">글제목</th>
-                    <th scope="col">최초작성</th>
+                    <th scope="col">주제</th>
+                    <th scope="col">작성일</th>
                     <th scope="col">마지막수정</th>
                 </tr>
             </thead>
             <tbody id="orders-box">
                 <tr>
-                    <td> <input type="checkbox" name="" value="1" ></td> 
+                    <td> <input type="checkbox" name="" value="1"></td>
                     <td>1</td>
                     <td><a href="#">초등학교 원격수업의 문제</a></td>
+                    <td>코로나19</td>
                     <td>2020.04.01</td>
                     <td>2020.04.18</td>
                 </tr>
             </tbody>
         </table>
-        <div class="buttons-under">
-            <button type="button" class="btn btn-outline-dark" onclick="location.href='write_ing.html'">글쓰기</button>
-            <button type="button" class="btn btn-outline-dark" onclick="">삭제</button>
+        <div class="buttons-under" >
+            <button type="button" class="btn btn-outline-dark" onclick="location.href='write_ing'">글쓰기</button>
+            <button type="button" class="btn btn-outline-dark" onclick=delete_check() >삭제</button>
         </div>
 
     </div>

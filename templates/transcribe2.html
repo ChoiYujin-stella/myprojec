@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Webpage Title -->
+  <title>WRitersCLUB ; 필사</title>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <!--구글폰트-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Song+Myung&display=swap" rel="stylesheet">
+
+  <script>
+    $(document).ready(function () {
+      $('#bonmoon').html('');
+      onebyone();
+    });
+
+    function nextFocus(where) {
+      if (event.keyCode == 13)
+        where.focus();
+    }
+
+    function onebyone() {
+      console.log("아무거나")
+
+      let this_url ='{{url}}'
+      let thisa_url= 'https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=101&oid=023&aid=0003526067'
+
+      alert(this_url)
+      alert(thisa_url)
+      console.log(this_url)
+
+
+
+      $.ajax({        
+        
+        type: "GET", // POST 방식으로 요청하겠다.
+        url: "/check_article", // /memo라는 url에 요청하겠다.
+        data: {url_give : this_url}, // 데이터를 주는 방법
+        success: function (response) { // 성공하면
+          if (response['result'] == 'success') {
+            alert("가져왔습니다");
+
+            let articles = response['articles']
+
+            let body = articles['body']
+            let title = articles['title']
+            let url = articles['ogurl']
+
+            let content2 = body.split('{}')
+            let content3 = content2[1].split('▶')
+            let article = content3[0].split("?").join("?:").split("!").join("!:").split(".").join(".:").split(":")
+
+            for (let i = 0; i < article.length - 1; i++) {
+              let sentence = article[i]
+
+              let tmp = '<div>\
+              <h5 id="article_'+ i + '">' + sentence + ' </h5>\
+              <input type="text" class="form-control" name="title" id="input_'+ i + '" placeholder="" onkeydown="nextFocus( input_' + (i + 1) + ')">\
+              </div> <br> <br>'
+              $('#bonmoon').append(tmp);
+            }
+
+            let temp = '<a href="' + url + '">기사원문보기</a>\
+            <h3 style="text-align: center; margin-top: 30px;" id="title">'+ title + '</h3>'
+            $('#title').append(temp);
+          }
+          else {
+            alert('서버 오류!')
+          }
+        }
+      })
+
+
+
+    }
+
+
+  </script>
+  <style>
+    * {
+      /* width: 900px; */
+      margin: 10px 10px 0px 10px;
+
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .logo {
+      display: block;
+      margin: 0px auto;
+    }
+
+    .body {
+      margin-top: 50px;
+      margin-bottom: 10px;
+      font-size: larger;
+    }
+
+    .all {
+      width: 1300px;
+      display: block;
+      margin: 80px auto;
+    }
+  </style>
+
+</head>
+
+
+
+<header>
+  <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
+  <a href="mypage"><img src="/static/logo.PNG" class="logo" width="500px"></a>
+</header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link " href="mypage">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link " href="write">작성중인 기사</a>
+      <a class="nav-item nav-link " href="scrap">스크랩 기사</a>
+      <a class="nav-item nav-link active" href="transcribe">필사</a>
+
+      <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
+      <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>
+      <a class="nav-item nav-link disabled" href="#">인기사설</a>
+      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+    </div>
+  </div>
+</nav>
+
+<body>
+  <article class="all">
+    <div id="title">
+      <!-- <a href="https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&oid=088&aid=0000644562&sid1=110">기사원문보기</a>
+      <h3 style="text-align: center; margin-top: 30px;" id="title">'담배꽁초'가 220억 불태웠다… 군포 물류센터 화재 피의자 긴급체포</h3> -->
+    </div>
+
+    <br>
+    <br>
+
+    <div class="" id="bonmoon">
+      <!-- <div>
+        <h5 id="article_0">220억원 넘는 재산피해를 낸 ‘군포 물류센터 화재’는 외국인 근로자가 무심코 버린 담배꽁초에서 발화된 것으로 알려졌다. </h5>
+        <input type="text" class="form-control" name="title" id="input_0" placeholder="title"
+          onkeydown="nextFocus( input_1)">
+      </div>
+      <div>
+        <h5 id="article_0">220억원 넘는 재산피해를 낸 ‘군포 물류센터 화재’는 외국인 근로자가 무심코 버린 담배꽁초에서 발화된 것으로 알려졌다. </h5>
+        <input type="text" class="form-control" name="title" id="input_0" placeholder="title"
+          onkeydown="nextFocus( input_1)">
+      </div> -->
+    </div>
+
+    <div class="buttons-under" style="margin: 20px 20px;">
+      <button type="button" class="btn btn-outline-dark" onclick="posting()">저장</button>
+      <button type="button" class="btn btn-outline-dark" onclick="location.href='write'">목록</button>
+    </div>
+
+  </article>
+
+</body>
