@@ -69,8 +69,10 @@
 
     function send() {
       let url = $('#transcribe-url').val();
-      alert(url)
-      window.open('/transcribe2/' + url)
+      localStorage.setItem('article_url', url)
+      window.open('/transcribe2')
+
+
     }
 
     function empty() {
@@ -94,11 +96,10 @@
       margin: 0px auto;
     }
 
-    .bbody {
+    .body {
       margin-top: 50px;
       margin-bottom: 10px;
       font-size: larger;
-      width: 100%;
     }
 
     .box {
@@ -118,19 +119,7 @@
       width: 500px;
       overflow: hidden;
     }
-    div.left {
-        width: 49%;
-        float: left;
-        box-sizing: border-box;
-      
-    }
-    div.right {
-        width: 46%;
-        float: right;
-        box-sizing: border-box;
-    
-    }
-    
+
   </style>
 
 </head>
@@ -139,7 +128,7 @@
 
 <header>
   <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
-  <a href="mypage"><img src="/static/logo.PNG" class="logo" width="500px"></a>
+  <a href="mypage"><img src="/static/logo2.PNG" class="logo" width="500px"></a>
 </header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -162,8 +151,8 @@
   </div>
 </nav>
 
-<body class="bbody">
-  <div class="right">
+<body>
+  <div class="">
     <div class="box">
       <h3 style=" text-align: center; margin-top: 30px;">필사 할 글의 url을 넣어주세요</h3>
       <br>
@@ -186,40 +175,6 @@
     </div>
   </div>
 
-  <div class="left">
-    <table class="table">
-      <thead>
-          <tr>
-              <th></th>
-              <th scope="col">num</th>
-              <th scope="col">제목</th>
-              <th scope="col">추가일</th>
-              <th scope="col">완성도</th>
-          </tr>
-      </thead>
-      <tbody id="orders-box">
-          <tr>
-              <td> <input type="checkbox" name="" value="1"></td>
-              <td>1</td>
-              <td><a href="">초등학교 원격수업의 문제</a></td>
-              <td>2020.04.01</td>
-              <td>0%</td>
-          </tr>
-      </tbody>
-  </table>
-  <div class="buttons-under" >
-      <button type="button" class="btn btn-outline-dark" onclick="location.href='write_ing'">글쓰기</button>
-      <button type="button" class="btn btn-outline-dark" onclick=delete_check() >삭제</button>
-  </div>
-
-      <br><br><br>
-    </div>
-  </div>
-
-  
-
-
-
-
+  <br><br><br>
 
 </body>

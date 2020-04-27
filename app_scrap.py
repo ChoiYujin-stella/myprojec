@@ -35,10 +35,9 @@ def write_read():
 def transcribe():
     return render_template('transcribe.html')
 
-@app.route('/transcribe2/<path:article_url>')
-def transcribe2(article_url):
-    print('!!!!!!!!!!!!!!!여기여!!!!!!!'+article_url)
-    return render_template('transcribe2.html' , url=article_url)
+@app.route('/transcribe2')
+def transcribe2():
+    return render_template('transcribe2.html')
 
 @app.route('/scrap')
 def scrap():

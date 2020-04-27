@@ -32,28 +32,57 @@
       onebyone();
     });
 
-    function nextFocus(where) {
-      if (event.keyCode == 13)
-        where.focus();
+    function nextFocus(a) {
+      console.log("-------------------------")
+
+      let now = $('#input_' + a)
+      let now_art = $('#article_' + a)
+      let then = $('#input_' + (a + 1))
+
+      let tmp_art =""
+      let atxt = now_art.text()
+      console.log("ori art", atxt)
+      let itxt = now.val()
+      console.log("input", itxt)
+      console.log(atxt[0], atxt[1], atxt[2])
+      for(let i=0 ; i < itxt.length ; i++ ){
+        console.log(i)
+        if( atxt[i] != itxt[i] ){
+          console.log("letter", atxt[i])
+          tmp_art += ' <span style="color:red;">' + atxt[i] + '</span>'
+          //' <span style="color:red;">' + atxt + '</span>'
+        } else{
+          tmp_art += atxt[i]
+        }
+
+      }
+      tmp_art += atxt.slice(itxt.length,atxt.length)
+    
+      console.log("article", tmp_art)
+      $(now_art).html(tmp_art);
+
+      // if (now_art.text() != now.val()) {
+      //     alert("오타있음")
+      //   } else {
+      //     then.focus();
+      //   }
+
+
+      if (event.keyCode == 13) {
+        then.focus();
+      }
+
     }
 
     function onebyone() {
-      console.log("아무거나")
+      let this_url = localStorage.getItem('article_url')
+      // let thisa_url= 'https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=101&oid=023&aid=0003526067'
 
-      let this_url ='{{url}}'
-      let thisa_url= 'https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=101&oid=023&aid=0003526067'
+      $.ajax({
 
-      alert(this_url)
-      alert(thisa_url)
-      console.log(this_url)
-
-
-
-      $.ajax({        
-        
         type: "GET", // POST 방식으로 요청하겠다.
         url: "/check_article", // /memo라는 url에 요청하겠다.
-        data: {url_give : this_url}, // 데이터를 주는 방법
+        data: { url_give: this_url }, // 데이터를 주는 방법
         success: function (response) { // 성공하면
           if (response['result'] == 'success') {
             alert("가져왔습니다");
@@ -66,14 +95,15 @@
 
             let content2 = body.split('{}')
             let content3 = content2[1].split('▶')
-            let article = content3[0].split("?").join("?:").split("!").join("!:").split(".").join(".:").split(":")
+            let article = content3[0].split("?").join("?:").split("!").join("!:").split(". ").join(".:").split(":")
 
             for (let i = 0; i < article.length - 1; i++) {
               let sentence = article[i]
 
               let tmp = '<div>\
               <h5 id="article_'+ i + '">' + sentence + ' </h5>\
-              <input type="text" class="form-control" name="title" id="input_'+ i + '" placeholder="" onkeydown="nextFocus( input_' + (i + 1) + ')">\
+              <input type="text" style="height:50px;" class="form-control" name="title" id="input_'+ i + '" placeholder="" \
+              onkeydown="nextFocus( ' + (i) + ')">\
               </div> <br> <br>'
               $('#bonmoon').append(tmp);
             }
@@ -126,7 +156,7 @@
 
 <header>
   <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
-  <a href="mypage"><img src="/static/logo.PNG" class="logo" width="500px"></a>
+  <a href="mypage"><img src="/static/logo2.PNG" class="logo" width="500px"></a>
 </header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -168,7 +198,7 @@
       <div>
         <h5 id="article_0">220억원 넘는 재산피해를 낸 ‘군포 물류센터 화재’는 외국인 근로자가 무심코 버린 담배꽁초에서 발화된 것으로 알려졌다. </h5>
         <input type="text" class="form-control" name="title" id="input_0" placeholder="title"
-          onkeydown="nextFocus( input_1)">
+          onkeydown="nextFocus(1)">
       </div> -->
     </div>
 
