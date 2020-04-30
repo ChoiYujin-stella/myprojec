@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://yujin:stella@15.164.129.171', 27017)
 #db변경해줄것!
 db = client.dbsparta
 
@@ -107,6 +107,15 @@ def list_mine():
     # 2. articles라는 키 값으로 영화정보 내려주기
     return jsonify({'result':'success', 'msg':'GET 연결되었습니다!', 'mine':result})
 
+@app.route('/list/delete', methods=['POST'])
+def star_delete():
+    # 1. 클라이언트가 전달한 name_give를 name_receive 변수에 넣습니다.
+    title_receive = request.form['title_give']
+    # 2. mystar 목록에서 delete_one으로 name이 name_receive와 일치하는 star를 제거합니다.
+    db.myarticle.delete_one({'title':title_receive})
+    # 3. 성공하면 success 메시지를 반환합니다.
+    return jsonify({'result': 'success'})
+
 ############################################################################################
 # transcribe()
 import re
@@ -134,7 +143,9 @@ def check_article():
         if a_tag is not None:
             text_temp += a_tag
 
-    url_body = text_temp
+    url_body = ""
+    for sss in text_temp.split("\n") : url_body+=sss
+
     url_image = og_image['content']
     url_title = og_title['content']
     url_description = og_description['content']

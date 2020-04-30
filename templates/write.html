@@ -40,11 +40,11 @@
                 data: {},
                 success: function (response) {
                     if (response['result'] == 'success') {
-                        alert(response['msg']);
+                        // alert(response['msg']);
 
                         let mine = response['mine']
                         for (let i = 0; i < mine.length; i++) {
-                            make_card(mine[i]['title'], mine[i]['topic'], mine[i]['time'])
+                            make_card(mine[i]['title'], mine[i]['topic'], mine[i]['time'], i)
                         }
 
                     }
@@ -52,22 +52,55 @@
             })
         }
 
-        function make_card(title, topic, time) {
+        function make_card(title, topic, time, num) {
             let temp_html = '<tr>\
-                    <td> <input type="checkbox" name="" value="1" ></td> \
-                    <td>1</td>\
-                    <td><a href="write_read">'+ title + '</a></td>\
+                    <td> <input type="checkbox" name="" id="checkbox_' + num + '" ></td> \
+                    <td>'+ (num + 1) + '</td>\
+                    <td><a href="write_read" id="title_'+ num + '">' + title + '</a></td>\
                     <td>'+ topic + '</td>\
                     <td>'+ time + '</td>\
-                    <td> 이건 어째하지..</td>\
+                    <td> 2020-00-00 </td>\
                 </tr>'
 
             $("#orders-box").append(temp_html);
         }
         /////////////
-        function delete_check(){
+        function delete_check() {
+
+            //체크 누른 박스의 정보
+            for (let i = 0; i < 10; i++) {
+                if ($('#checkbox_' + i).is(":checked")) {
+
+                    let title = $('#title_' + i).text()
+                    let askk = confirm("삭제하시겠습니까?")
+
+                    if (askk == true) {
+                        // 1. 서버에 1) POST 방식으로, 2) /api/delete 라는 url에, 3) name_give라는 이름으로 name을 전달합니다.
+                        // 참고) POST 방식이므로 data: {'name_give': name} 과 같은 양식이 되어야합니다!
+                        $.ajax({
+                            type: "POST",
+                            url: "/list/delete",
+                            data: { 'title_give': title },
+                            success: function (response) {
+                                if (response['result'] == 'success') {
+                                    // 2. '삭제 완료! 안녕!' 얼럿을 띄웁니다.
+                                    // alert('삭제 완료')
+                                    // 3. 변경된 정보를 반영하기 위해 새로고침합니다.
+                                    window.location.reload()
+                                }
+                            }
+                        });
+                    }
+
+
+
+                }
+
+            }
 
         }
+
+
 
     </script>
 
@@ -91,8 +124,9 @@
         }
 
         .orders {
-            width: 700px;
-            margin: 0px auto;
+            width: auto;
+       
+            margin: 50px 150px;
         }
 
         .buttons-under {
@@ -143,8 +177,8 @@
             </thead>
             <tbody id="orders-box">
                 <tr>
-                    <td> <input type="checkbox" name="" value="1"></td>
-                    <td>1</td>
+                    <td> <input type="checkbox" name="" value="0"></td>
+                    <td> 1 </td>
                     <td><a href="#">초등학교 원격수업의 문제</a></td>
                     <td>코로나19</td>
                     <td>2020.04.01</td>
@@ -152,9 +186,9 @@
                 </tr>
             </tbody>
         </table>
-        <div class="buttons-under" >
+        <div class="buttons-under">
             <button type="button" class="btn btn-outline-dark" onclick="location.href='write_ing'">글쓰기</button>
-            <button type="button" class="btn btn-outline-dark" onclick=delete_check() >삭제</button>
+            <button type="button" class="btn btn-outline-dark" onclick=delete_check()>삭제</button>
         </div>
 
     </div>

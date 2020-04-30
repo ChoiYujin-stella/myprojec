@@ -49,10 +49,10 @@
         data: {},
         success: function (response) {
           if (response['result'] == 'success') {
-            alert(response['msg']);
+            // alert(response['msg']);
             let articles = response['articles']
             for(let i=0 ; i<articles.length ; i++){
-              make_card(articles[i]['comment'], articles[i]['desc'], articles[i]['image'], articles[i]['title'], articles[i]['url'])
+              make_card(articles[i]['comment'], articles[i]['desc'], articles[i]['image'], articles[i]['title'], articles[i]['url'],i)
             }
 
           }
@@ -60,7 +60,7 @@
       })
     }
 
-    function make_card(comment, desc, image, title, url) {
+    function make_card(comment, desc, image, title, url,num) {
       let temp_html = '<div class="card">\
         <img class="card-img-top" src="'+ image + '" alt="Card image cap">\
         <div class="card-body">\
@@ -84,7 +84,7 @@
                comment_give: comment }, // 데이터를 주는 방법
         success: function (response) { // 성공하면
           if (response['result'] == 'success') {
-            alert('포스팅 성공!');
+            // alert('포스팅 성공!');
             window.location.reload();
           } else {
             alert('서버 오류!')
@@ -110,10 +110,6 @@
       font-size: larger;
     }
 
-    .cardbox {
-
-      margin: 0px 30px 0px 30px;
-    }
 
     .comment {
       color: blue;

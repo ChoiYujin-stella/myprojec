@@ -25,7 +25,46 @@
 
     <!--구글폰트-->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Song+Myung&display=swap" rel="stylesheet">
+    <script>
+        $(document).ready(function () {
+            $('#orders-box').html('');
+            console.log("이건되냐")
+            listing();
+        });
 
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/list/mine",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        // alert(response['msg']);
+
+                        let mine = response['mine']
+                        for (let i = 0; i < mine.length; i++) {
+                            make_card(mine[i]['title'], mine[i]['topic'], mine[i]['time'])
+                        }
+                        $('#num').html(mine.length);
+
+                    }
+                }
+            })
+        }
+
+        function make_card(title, topic, time) {
+            let temp_html = '<tr>\
+                    <td style="height: 40px;"><a href="write_read" >'+ title + '</a></td>&nspd\
+                </tr>'
+
+            $("#writing_list").append(temp_html);
+        }
+        /////////////
+        function delete_check() {
+
+        }
+
+    </script>
     <style>
         * {
             /* width: 900px; */
@@ -38,7 +77,8 @@
             display: block;
             margin: 0px auto;
         }
-        .body{
+
+        .body {
             margin-top: 50px;
             margin-bottom: 10px;
             font-size: larger;
@@ -52,43 +92,43 @@
     <header>
         <button type="button" class="btn btn-dark" style="float: right;">로그인</button>
         <a href="mypage"><img src="/static/logo2.PNG" class="logo" width="500px"></a>
-      </header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="mypage">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link " href="write">작성중인 기사</a>
-            <a class="nav-item nav-link " href="scrap">스크랩 기사</a>
-            <a class="nav-item nav-link " href="transcribe">필사</a>
-    
-            <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
-            <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>
-            <a class="nav-item nav-link disabled" href="#">인기사설</a>
-            <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
-          </div>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="mypage">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link " href="write">작성중인 기사</a>
+                <a class="nav-item nav-link " href="scrap">스크랩 기사</a>
+                <a class="nav-item nav-link " href="transcribe">필사</a>
+
+                <a class="nav-item nav-link disabled" href="#">작성한 글 공유</a>
+                <a class="nav-item nav-link disabled" href="#">이슈파이팅</a>
+                <a class="nav-item nav-link disabled" href="#">인기사설</a>
+                <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+            </div>
         </div>
-      </nav>
+    </nav>
 
     <div class="container">
         <ul class="under">
             <table class="body">
-                <th>작성중인 기사 <span class="badge badge-primary badge-pill">14</span></th>
-                <tr>
-                    <td><a href="#">가가가가가가가가</a> </td>
+                <th style="height: 100px;">작성중인 기사 <span class="badge badge-primary badge-pill" id="num">mine.length</span></th>
+                <tr id="writing_list">
+                    <!-- <td><a href="#">가가가가가가가가</a> </td> -->
                 </tr>
             </table>
-            
-            <table class="body">
+
+            <!-- <table class="body">
                 <th>필사 <span class="badge badge-primary badge-pill">4</span></th>
                 <tr>
                     <td><a href="#">가가가가가가가가</a> </td>
                 </tr>
-            </table>
+            </table> -->
         </ul>
     </div>
 
